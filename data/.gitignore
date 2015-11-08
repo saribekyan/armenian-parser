@@ -1,0 +1,8 @@
+# Wiktionary xml/bz2 dump files. Can be downloaded at https://dumps.wikimedia.org/
+#   For example https://dumps.wikimedia.org/hywiktionary/20151102/hywiktionary-20151102-pages-articles-multistream.xml.bz2
+
+*.xml
+*.bz2
+*.ipynb
+.ipynb_checkpoints
+
