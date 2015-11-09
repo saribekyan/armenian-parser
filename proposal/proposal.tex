@@ -1,0 +1,76 @@
+\documentclass[]{article}
+
+\usepackage[latin]{armtex}
+
+%opening
+\title{Dependency Parsing of Armenian}
+\author{Hayk Saribekyan (hayks@csail.mit.edu) \\ 
+        Mentors: Yuan Zhang (yuanzh@csail.mit.edu)}
+
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+Although significant research has been done recently addressing dependency parsing of natural languages, for many languages there have been results.
+This project aims to explore parsing of low-resource languages and uses Armenian as an example of such language.
+The project will try existing methods of parsing.
+Parciularly, it will focus on cross-lingual parsers, which rely on having some kind of similarity between source and target languages, and a relatively small treebank in the target language.
+
+This project will explore different approaches for parsing of Armenian language, and possibly come up with novel ways to tackle such problem.
+\end{abstract}
+
+\section{Background}
+Linguists classify Armenian as an independent branch of Indo-European Languages.
+Armenian is a relatively small language (spoken by less than 10 million people), which makes data collection and annotation challenging.
+The language also has its unique script.
+
+Armenian is a non-projective language.
+Unlike English, Armenian has 7 noun cases.
+For example, the phrase "on table" can be translated to "\artm \textbf{seghan}in\aroff" or "\artm \textbf{seghan}i vra\aroff", where the nominative case of the word "table" is shown in bold.
+
+These features make parsing of Armenian more challenging and interesting to see what are the results we can achieve.
+
+\section{Methods and Related Work}
+The first step of the project is to get large enough annotated treebank in Armenian.
+For some approaches for training it is enough to have just POS tags for Armenian text.
+Other approaches require some (small) treebank in target language.
+For testing and evaluation a dependency treebank is necessary.
+
+Due to lack of enough resources the treebank will be small.
+So, to achieve reasonable parsing accuracy some kind of transfer of dependency parser from a resource-rich language will be used.
+
+Our initial approach will use only sentences in Armenian with ground truth POS tags for training.
+The POS tags are used to find a similar language that has a comprehensive treebank.
+Then a delexicalized parser is transferred from that language to Armenian \cite{google_delex_transfer}.
+
+Patterns between two languages can be identified using $n$-gram distributions on POS tag sequences.
+For example, since in Armenian the order \textit{adjective-noun} is more common than \textit{noun-adjective}, English in this respect should be closer to Armenian than French (where the opposite order is more common).
+
+This approach is very simple and it will give us first preliminary result.
+However, if small treebank and parallel data is available for Armenian more complex methods can be applied.
+
+The method described in \cite{neural_net_duong} trains a neural network model for both a resource-rich language (e.g. English) and resource poor language (e.g. Armenian).
+So, the resulting model similar to a universal dependency parser.
+To avoid having a model dominated by the source language in case the source treebank is much larger than the target, during the training the data batches that are fed to the network have the same number of samples from both languages.
+In this case too, the model assumes some similarity between languages.
+
+Availability of parallel data is required in \cite{collins_density_transfer}.
+It first uses GIZA++ \cite{giza_pp} to project dependencies from source to target.
+Then a parser is trained on this projected set.
+This approach however requires both languages to be projective, which is not the case in Armenian.
+Although Armenian is not a projective language in the majority of the cases sentences have projective dependency.
+
+\section{Data}
+All approaches, some more than the others, require a treebank of some size.
+Armenian does not have any available one, but I am working on creating a small treebank of few hundred sentences with some help from Armenia.
+
+EANC \cite{eanc} is a large corpus developed by a team of linguists.
+It contains POS tags for large texts and I anticipate to get their data in a reasonable format.
+
+Parallel data can be generated relatively easily using simple dynamic programming techniques \cite{gale1993_alignment}, because Armenian has large amount of translated literature.
+
+\bibliographystyle{plain}
+\bibliography{proposal}
+
+\end{document}

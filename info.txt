@@ -1,0 +1,12 @@
+Steps:
+
+0. First find a dataset with short POS tagged sentences and compare it to existing parsers/POS.
+
+1. Label 200-300 sentences manually
+    - Look at Penn Treebank for an idea of how to do
+    - Need do POS tagging as well (EANC might help)
+
+2. Run state of the art parsers using the manual data to have a baseline.
+
+3. Try to generate parallel text (simple DP)
+
